@@ -1209,28 +1209,38 @@
         }
 
         function generatePDF() {
+            console.log('🔵 generatePDF() llamada');
+            
             // Validar que jsPDF esté cargado
             if (typeof window.jspdf === 'undefined') {
+                console.error('❌ jsPDF no cargado');
                 alert('❌ Error: Librería de PDF no cargada.\n\nPor favor recarga la página.');
                 return;
             }
-
-            const { jsPDF } = window.jspdf;
-            const carnets = getCarnetsToPrint();
-            const perPage = parseInt(document.getElementById('carnetsPerPage').value);
-            const orientation = document.getElementById('pageOrientation').value;
-            const includeLogo = document.getElementById('includeLogo').checked;
             
-            if (carnets.length === 0) {
-                alert('⚠️ No hay carnets para imprimir con los filtros seleccionados');
-                return;
-            }
+            console.log('✅ jsPDF cargado correctamente');
 
-            const doc = new jsPDF({
-                orientation: orientation,
-                unit: 'mm',
-                format: 'a4'
-            });
+            try {
+                const { jsPDF } = window.jspdf;
+                const carnets = getCarnetsToPrint();
+                const perPage = parseInt(document.getElementById('carnetsPerPage').value);
+                const orientation = document.getElementById('pageOrientation').value;
+                const includeLogo = document.getElementById('includeLogo').checked;
+                
+                console.log('📊 Configuración:', { carnets: carnets.length, perPage, orientation, includeLogo });
+                
+                if (carnets.length === 0) {
+                    alert('⚠️ No hay carnets para imprimir con los filtros seleccionados');
+                    return;
+                }
+
+                const doc = new jsPDF({
+                    orientation: orientation,
+                    unit: 'mm',
+                    format: 'a4'
+                });
+                
+                console.log('📄 Documento PDF creado');
 
             const pageWidth = orientation === 'portrait' ? 210 : 297;
             const pageHeight = orientation === 'portrait' ? 297 : 210;
@@ -1264,8 +1274,15 @@
                 currentPosition++;
             });
 
+            console.log('💾 Guardando PDF...');
             doc.save(`carnets_arcor_${new Date().toISOString().split('T')[0]}.pdf`);
+            console.log('✅ PDF generado exitosamente');
             alert(`✅ PDF generado con ${carnets.length} carnets`);
+            
+            } catch (error) {
+                console.error('❌ Error al generar PDF:', error);
+                alert('❌ Error al generar PDF: ' + error.message);
+            }
         }
 
         function drawCarnet(doc, carnet, x, y, width, height, includeLogo) {
@@ -1420,28 +1437,38 @@
         }
 
         function printDirect() {
+            console.log('🖨️ printDirect() llamada');
+            
             // Validar que jsPDF esté cargado
             if (typeof window.jspdf === 'undefined') {
+                console.error('❌ jsPDF no cargado');
                 alert('❌ Error: Librería de PDF no cargada.\n\nPor favor recarga la página.');
                 return;
             }
-
-            const { jsPDF } = window.jspdf;
-            const carnets = getCarnetsToPrint();
-            const perPage = parseInt(document.getElementById('carnetsPerPage').value);
-            const orientation = document.getElementById('pageOrientation').value;
-            const includeLogo = document.getElementById('includeLogo').checked;
             
-            if (carnets.length === 0) {
-                alert('⚠️ No hay carnets para imprimir con los filtros seleccionados');
-                return;
-            }
+            console.log('✅ jsPDF cargado correctamente');
 
-            const doc = new jsPDF({
-                orientation: orientation,
-                unit: 'mm',
-                format: 'a4'
-            });
+            try {
+                const { jsPDF } = window.jspdf;
+                const carnets = getCarnetsToPrint();
+                const perPage = parseInt(document.getElementById('carnetsPerPage').value);
+                const orientation = document.getElementById('pageOrientation').value;
+                const includeLogo = document.getElementById('includeLogo').checked;
+                
+                console.log('📊 Configuración:', { carnets: carnets.length, perPage, orientation, includeLogo });
+                
+                if (carnets.length === 0) {
+                    alert('⚠️ No hay carnets para imprimir con los filtros seleccionados');
+                    return;
+                }
+
+                const doc = new jsPDF({
+                    orientation: orientation,
+                    unit: 'mm',
+                    format: 'a4'
+                });
+                
+                console.log('📄 Documento PDF creado para impresión');
 
             const pageWidth = orientation === 'portrait' ? 210 : 297;
             const pageHeight = orientation === 'portrait' ? 297 : 210;
@@ -1476,16 +1503,26 @@
             });
 
             // Abrir en nueva ventana para imprimir
+            console.log('🖨️ Generando blob para impresión...');
             const pdfBlob = doc.output('blob');
             const pdfUrl = URL.createObjectURL(pdfBlob);
+            
+            console.log('🪟 Abriendo ventana de impresión...');
             const printWindow = window.open(pdfUrl);
             
             if (printWindow) {
                 printWindow.onload = function() {
+                    console.log('✅ Ventana cargada, activando diálogo de impresión');
                     printWindow.print();
                 };
             } else {
+                console.warn('⚠️ Ventana emergente bloqueada');
                 alert('⚠️ Por favor permite ventanas emergentes para imprimir directamente.\n\nAlternativamente usa el botón "Generar PDF".');
+            }
+            
+            } catch (error) {
+                console.error('❌ Error al imprimir:', error);
+                alert('❌ Error al imprimir: ' + error.message);
             }
         }
 
