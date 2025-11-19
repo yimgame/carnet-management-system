@@ -1,0 +1,47 @@
+# Archivos del sistema operativo
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Carpetas de entorno virtual Python
+venv/
+env/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Archivos de IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Archivos temporales
+*.log
+*.tmp
+*.bak
+
+# Node modules (si usas npm en el futuro)
+node_modules/
+
+# Archivos de base de datos locales
+*.db
+*.sqlite
+*.sqlite3
+
+# Variables de entorno
+.env
+.env.local
+
+# Archivos de backup
+backup/
+*.backup
+
+# Documentación obsoleta (opcional - descomenta si quieres ignorarlos)
+# LEEME.md
+# GUIA_DE_USO.md
+# GUIA_IMPRESION.md
+# GUIA_EDICION_FOTOS.md
+# GUIA_FOTOS.md

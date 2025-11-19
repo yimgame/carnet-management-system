@@ -1,0 +1,22 @@
+CARPETA DE FOTOS - Sistema de Carnets ARCOR
+============================================
+
+INSTRUCCIONES:
+
+1. Nombra las fotos como: DNI.jpg
+   Ejemplo: 12345678.jpg
+
+2. Formatos aceptados: JPG, PNG
+
+3. Tamaño recomendado: 400x500 px, menos de 200 KB
+
+4. El sistema buscará automáticamente la foto por DNI
+
+EJEMPLOS:
+- DNI 12345678 → foto: 12345678.jpg
+- DNI 87654321 → foto: 87654321.png
+
+NOTAS:
+- Si no encuentra la foto, mostrará el emoji 👤
+- Puedes usar minúsculas o mayúsculas en la extensión (.jpg o .JPG)
+- Las fotos se cargan automáticamente al mostrar el carnet
