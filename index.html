@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistema de Gestión de Carnets - ARCOR</title>
+    
+    <!-- Link dinámico para el tema CSS -->
+    <link id="theme-stylesheet" rel="stylesheet" href="themes/default.css">
+    
     <style>
         * {
             margin: 0;
@@ -506,6 +510,7 @@
                 <button class="btn btn-primary" onclick="exportData()">💾 Exportar Datos</button>
                 <button class="btn btn-info" onclick="openPrintConfig()">🖨️ Configurar</button>
                 <button class="btn btn-info" onclick="printQuick10()" style="background: #8b5cf6;">🖨️ 10 por Hoja</button>
+                <button class="btn btn-secondary" onclick="openThemeConfig()" title="Cambiar tema">🎨 Temas</button>
             </div>
         </header>
 
@@ -626,6 +631,52 @@
 
             <h3 style="margin: 20px 0 10px 0; color: #1e3a8a;">Vista Previa (primeros 10)</h3>
             <div class="preview-grid" id="previewGrid"></div>
+        </div>
+    </div>
+
+    <!-- Modal para configuración de temas -->
+    <div class="modal" id="themeConfigModal">
+        <div class="modal-content" style="max-width: 600px;">
+            <div class="modal-header">
+                <h2>🎨 Configuración de Temas</h2>
+                <button class="close-btn" onclick="closeModal('themeConfigModal')">&times;</button>
+            </div>
+            
+            <div style="padding: 20px;">
+                <div class="form-group">
+                    <label for="themeSelector" style="font-size: 16px; font-weight: 600; margin-bottom: 10px; display: block;">
+                        Selecciona un tema visual:
+                    </label>
+                    <select id="themeSelector" onchange="changeTheme(event)" style="font-size: 16px; padding: 10px; width: 100%;">
+                        <option value="default">🔵 Default (Azul ARCOR Original)</option>
+                        <option value="oscuro">🌙 Oscuro (Dark Mode)</option>
+                        <option value="claro">☀️ Claro (Light Minimalista)</option>
+                        <option value="arcor">🏢 ARCOR (Colores Corporativos)</option>
+                    </select>
+                </div>
+
+                <div style="margin-top: 20px; padding: 15px; background: rgba(59, 130, 246, 0.1); border-radius: 8px; border-left: 4px solid #3b82f6;">
+                    <h4 style="margin-bottom: 10px; color: #1e3a8a;">📝 Descripción de Temas:</h4>
+                    <ul style="line-height: 1.8; padding-left: 20px;">
+                        <li><strong>Default:</strong> Azul clásico ARCOR, ideal para uso general</li>
+                        <li><strong>Oscuro:</strong> Modo oscuro para trabajo nocturno, reduce fatiga visual</li>
+                        <li><strong>Claro:</strong> Minimalista y limpio, máxima legibilidad</li>
+                        <li><strong>ARCOR:</strong> Colores corporativos oficiales de ARCOR</li>
+                    </ul>
+                </div>
+
+                <div style="margin-top: 20px; padding: 15px; background: rgba(16, 185, 129, 0.1); border-radius: 8px; border-left: 4px solid #10b981;">
+                    <p style="margin: 0; color: #065f46;">
+                        ℹ️ <strong>Nota:</strong> El tema seleccionado se guarda automáticamente y se aplicará cada vez que abras la aplicación.
+                    </p>
+                </div>
+
+                <div style="text-align: center; margin-top: 30px;">
+                    <button class="btn btn-primary" onclick="closeModal('themeConfigModal')" style="padding: 12px 40px; font-size: 16px;">
+                        ✅ Cerrar
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -754,6 +805,7 @@
         // Cargar datos del localStorage al iniciar
         window.addEventListener('DOMContentLoaded', () => {
             loadFromLocalStorage();
+            loadTheme();
             renderCarnets();
         });
 
@@ -766,6 +818,34 @@
 
         function saveToLocalStorage() {
             localStorage.setItem('carnetsData', JSON.stringify(carnetsData));
+        }
+
+        // ========== FUNCIONES DE TEMA CSS ==========
+        
+        function loadTheme() {
+            const savedTheme = localStorage.getItem('selectedTheme') || 'default';
+            applyTheme(savedTheme);
+            
+            // Actualizar selector si existe
+            const themeSelector = document.getElementById('themeSelector');
+            if (themeSelector) {
+                themeSelector.value = savedTheme;
+            }
+        }
+
+        function applyTheme(themeName) {
+            const themeLink = document.getElementById('theme-stylesheet');
+            themeLink.href = `themes/${themeName}.css`;
+            localStorage.setItem('selectedTheme', themeName);
+        }
+
+        function changeTheme(event) {
+            const selectedTheme = event.target.value;
+            applyTheme(selectedTheme);
+        }
+
+        function openThemeConfig() {
+            document.getElementById('themeConfigModal').classList.add('active');
         }
 
         function openExcelUpload() {
@@ -835,6 +915,13 @@
             carnetsData.push(newCarnet);
             saveToLocalStorage();
             renderCarnets();
+            
+            // Descargar foto automáticamente si existe
+            if (photoData) {
+                downloadPhotoFile(photoData, newCarnet.dni);
+                alert('✅ Carnet creado correctamente\n\n📸 Foto descargada como ' + newCarnet.dni + '.jpg\n👉 Muévela a la carpeta fotos/ para usarla con rutas relativas');
+            }
+            
             form.reset();
             document.getElementById('photoPreview').style.display = 'none';
             closeModal('newCarnetModal');
@@ -1527,11 +1614,19 @@
             // Encontrar y actualizar el carnet
             const index = carnetsData.findIndex(c => c.id === carnetId);
             if (index !== -1) {
+                const oldCarnet = carnetsData[index];
                 carnetsData[index] = updatedCarnet;
                 saveToLocalStorage();
                 renderCarnets();
                 closeModal('editCarnetModal');
-                alert('✅ Carnet actualizado correctamente');
+                
+                // Descargar foto automáticamente si se cambió
+                if (photoData && photoData !== oldCarnet.foto) {
+                    downloadPhotoFile(photoData, updatedCarnet.dni);
+                    alert('✅ Carnet actualizado correctamente\n\n📸 Foto actualizada descargada como ' + updatedCarnet.dni + '.jpg\n👉 Muévela a la carpeta fotos/ para usarla con rutas relativas');
+                } else {
+                    alert('✅ Carnet actualizado correctamente');
+                }
             } else {
                 alert('❌ Error al actualizar el carnet');
             }
@@ -1568,6 +1663,16 @@
         }
 
         // ========== FUNCIONES PARA GESTIÓN DE FOTOS EN CARPETA LOCAL ==========
+        
+        // Función helper para descargar una foto individual
+        function downloadPhotoFile(photoBase64, dni) {
+            const link = document.createElement('a');
+            link.href = photoBase64;
+            link.download = `${dni}.jpg`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
         
         // Función para descargar todas las fotos a una carpeta
         function downloadAllPhotos() {

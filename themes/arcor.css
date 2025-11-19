@@ -1,0 +1,154 @@
+/* ========================================
+   TEMA ARCOR - Colores Corporativos ARCOR
+   ======================================== */
+
+:root {
+    /* Colores principales ARCOR */
+    --primary-color: #0052a3;
+    --primary-dark: #003d7a;
+    --primary-light: #0066cc;
+    
+    /* Colores de fondo */
+    --bg-primary: #f0f4f8;
+    --bg-secondary: #ffffff;
+    --bg-card: #ffffff;
+    
+    /* Colores de texto */
+    --text-primary: #1a1a1a;
+    --text-secondary: #666666;
+    --text-light: #999999;
+    
+    /* Colores de estado */
+    --success-color: #00a651;
+    --warning-color: #ff9800;
+    --danger-color: #d32f2f;
+    --info-color: #0052a3;
+    
+    /* Colores secundarios ARCOR */
+    --arcor-blue: #0052a3;
+    --arcor-red: #e30613;
+    --arcor-gray: #e5e5e5;
+    
+    /* Bordes y sombras */
+    --border-color: #d9d9d9;
+    --shadow-sm: 0 2px 4px rgba(0, 82, 163, 0.08);
+    --shadow-md: 0 4px 8px rgba(0, 82, 163, 0.12);
+    --shadow-lg: 0 8px 16px rgba(0, 82, 163, 0.16);
+    
+    /* Espaciado */
+    --spacing-xs: 0.25rem;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 2rem;
+    
+    /* Border radius */
+    --radius-sm: 0.25rem;
+    --radius-md: 0.5rem;
+    --radius-lg: 0.75rem;
+    
+    /* Gradientes ARCOR */
+    --gradient-header: linear-gradient(135deg, #0052a3 0%, #0066cc 50%, #0052a3 100%);
+    --gradient-card: linear-gradient(135deg, rgba(0, 82, 163, 0.05) 0%, rgba(0, 102, 204, 0.05) 100%);
+    --gradient-footer: linear-gradient(90deg, #0052a3 0%, #003d7a 100%);
+}
+
+/* Aplicar variables a elementos clave */
+body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+}
+
+.container {
+    background-color: var(--bg-secondary);
+}
+
+.header {
+    background: var(--gradient-header);
+    box-shadow: var(--shadow-md);
+}
+
+.stat-card {
+    background: var(--bg-card);
+    border: 2px solid var(--border-color);
+    box-shadow: var(--shadow-md);
+}
+
+.carnet-card {
+    background: var(--bg-card);
+    border: 2px solid var(--border-color);
+    box-shadow: var(--shadow-sm);
+}
+
+.carnet-card:hover {
+    box-shadow: var(--shadow-lg);
+    border-color: var(--primary-color);
+}
+
+.btn-primary {
+    background: var(--gradient-header);
+    color: white;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.btn-primary:hover {
+    background: var(--primary-dark);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+}
+
+.alert.warning {
+    background-color: var(--warning-color);
+    border-left: 4px solid #f57c00;
+}
+
+.alert.danger {
+    background-color: var(--danger-color);
+    border-left: 4px solid #b71c1c;
+}
+
+.alert.success {
+    background-color: var(--success-color);
+    border-left: 4px solid #00875a;
+}
+
+input, select, textarea {
+    border: 2px solid var(--border-color);
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+}
+
+input:focus, select:focus, textarea:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 4px rgba(0, 82, 163, 0.1);
+}
+
+.modal-content {
+    background-color: var(--bg-secondary);
+    box-shadow: var(--shadow-lg);
+    border: 2px solid var(--primary-color);
+}
+
+/* Estilos especiales ARCOR */
+.stat-card h3 {
+    color: var(--arcor-blue);
+    font-weight: 700;
+}
+
+.carnet-header-print {
+    background: var(--gradient-header) !important;
+}
+
+.carnet-footer-print {
+    background: var(--gradient-footer) !important;
+}
+
+/* Acentos corporativos */
+.btn-danger {
+    background-color: var(--arcor-red);
+}
+
+.btn-success {
+    background-color: var(--success-color);
+}

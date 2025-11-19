@@ -1,0 +1,126 @@
+/* ========================================
+   TEMA OSCURO - Dark Mode
+   ======================================== */
+
+:root {
+    /* Colores principales */
+    --primary-color: #60a5fa;
+    --primary-dark: #3b82f6;
+    --primary-light: #93c5fd;
+    
+    /* Colores de fondo */
+    --bg-primary: #0f172a;
+    --bg-secondary: #1e293b;
+    --bg-card: #334155;
+    
+    /* Colores de texto */
+    --text-primary: #f1f5f9;
+    --text-secondary: #cbd5e1;
+    --text-light: #94a3b8;
+    
+    /* Colores de estado */
+    --success-color: #10b981;
+    --warning-color: #f59e0b;
+    --danger-color: #ef4444;
+    --info-color: #3b82f6;
+    
+    /* Bordes y sombras */
+    --border-color: #475569;
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.4);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.5);
+    
+    /* Espaciado */
+    --spacing-xs: 0.25rem;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 2rem;
+    
+    /* Border radius */
+    --radius-sm: 0.25rem;
+    --radius-md: 0.5rem;
+    --radius-lg: 0.75rem;
+    
+    /* Gradientes */
+    --gradient-header: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+    --gradient-card: linear-gradient(135deg, rgba(96, 165, 250, 0.1) 0%, rgba(59, 130, 246, 0.1) 100%);
+}
+
+/* Aplicar variables a elementos clave */
+body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+}
+
+.container {
+    background-color: var(--bg-secondary);
+}
+
+.header {
+    background: var(--gradient-header);
+}
+
+.stat-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-md);
+}
+
+.carnet-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-sm);
+}
+
+.carnet-card:hover {
+    box-shadow: var(--shadow-lg);
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: var(--bg-primary);
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-light);
+}
+
+.alert.warning {
+    background-color: var(--warning-color);
+    color: var(--bg-primary);
+}
+
+.alert.danger {
+    background-color: var(--danger-color);
+}
+
+.alert.success {
+    background-color: var(--success-color);
+}
+
+input, select, textarea {
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+}
+
+input:focus, select:focus, textarea:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.2);
+}
+
+.modal-content {
+    background-color: var(--bg-card);
+    box-shadow: var(--shadow-lg);
+    color: var(--text-primary);
+}
+
+/* Ajustes adicionales para modo oscuro */
+.modal-content h2, .modal-content h3 {
+    color: var(--text-primary);
+}
+
+.form-group label {
+    color: var(--text-secondary);
+}
