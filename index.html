@@ -1270,30 +1270,19 @@
 
             // Header azul con título destacado
             doc.setFillColor(0, 82, 163);
-            doc.rect(x, y, width, 15, 'F');
+            doc.rect(x, y, width, 12, 'F');
             
             doc.setTextColor(255, 255, 255);
-            doc.setFontSize(10);
+            doc.setFontSize(9);
             doc.setFont('helvetica', 'bold');
             const headerText = 'Chofer Autorizado para manejar autoelevador de 2240 Kg';
-            doc.text(headerText, x + width/2, y + 9, { align: 'center' });
+            doc.text(headerText, x + width/2, y + 8, { align: 'center' });
 
-            // Logo ARCOR en círculo (abajo izquierda de la foto)
-            if (includeLogo) {
-                doc.setFillColor(0, 82, 163);
-                doc.circle(x + 15, y + 50, 10, 'F');
-                doc.setTextColor(255, 255, 255);
-                doc.setFontSize(7);
-                doc.setFont('helvetica', 'bold');
-                doc.text('Grupo', x + 15, y + 48, { align: 'center' });
-                doc.text('ARCOR', x + 15, y + 52, { align: 'center' });
-            }
-
-            // Foto - usar imagen real si existe, sino placeholder
-            const photoX = x + 8;
-            const photoY = y + 20;
-            const photoWidth = 35;
-            const photoHeight = 45;
+            // Foto - más pequeña y pegada a la izquierda
+            const photoX = x + 5;
+            const photoY = y + 17;
+            const photoWidth = 30;
+            const photoHeight = 40;
             
             if (carnet.foto) {
                 try {
@@ -1313,100 +1302,115 @@
                 doc.rect(photoX, photoY, photoWidth, photoHeight);
             }
 
-            // Área blanca de información
+            // Logo ARCOR en círculo (DEBAJO de la foto)
+            if (includeLogo) {
+                const logoX = x + 20;
+                const logoY = y + 62;
+                doc.setFillColor(0, 82, 163);
+                doc.circle(logoX, logoY, 8, 'F');
+                doc.setTextColor(255, 255, 255);
+                doc.setFontSize(5);
+                doc.setFont('helvetica', 'bold');
+                doc.text('Grupo', logoX, logoY - 1, { align: 'center' });
+                doc.setFontSize(6);
+                doc.text('ARCOR', logoX, logoY + 2.5, { align: 'center' });
+            }
+
+            // Área blanca de información (a la derecha de la foto)
             doc.setFillColor(255, 255, 255);
-            const infoBoxX = x + 50;
-            const infoBoxY = y + 20;
-            const infoBoxWidth = width - 55;
-            const infoBoxHeight = 45;
+            const infoBoxX = x + 40;
+            const infoBoxY = y + 17;
+            const infoBoxWidth = width - 45;
+            const infoBoxHeight = 53;
             doc.rect(infoBoxX, infoBoxY, infoBoxWidth, infoBoxHeight, 'F');
             doc.setDrawColor(200, 200, 200);
             doc.rect(infoBoxX, infoBoxY, infoBoxWidth, infoBoxHeight);
 
             // Información del carnet con formato label: valor
             doc.setTextColor(0, 0, 0);
-            doc.setFontSize(9);
+            doc.setFontSize(8);
             
-            let infoY = infoBoxY + 6;
-            const labelX = infoBoxX + 3;
-            const lineHeight = 6;
+            let infoY = infoBoxY + 5;
+            const labelX = infoBoxX + 2;
+            const valueX = infoBoxX + 30;
+            const lineHeight = 5.5;
 
             // Empresa
             doc.setFont('helvetica', 'bold');
             doc.text('Empresa:', labelX, infoY);
             doc.setFont('helvetica', 'normal');
-            doc.text('ARCOR SAIC', labelX + 20, infoY);
+            doc.text('ARCOR SAIC', valueX, infoY);
             
             // Línea separadora
             doc.setDrawColor(220, 220, 220);
-            doc.line(labelX, infoY + 1.5, infoBoxX + infoBoxWidth - 3, infoY + 1.5);
+            doc.line(labelX, infoY + 1.2, infoBoxX + infoBoxWidth - 2, infoY + 1.2);
             infoY += lineHeight;
 
             // Apellido
             doc.setFont('helvetica', 'bold');
             doc.text('Apellido:', labelX, infoY);
             doc.setFont('helvetica', 'normal');
-            doc.text(carnet.apellido, labelX + 20, infoY);
+            doc.text(carnet.apellido, valueX, infoY);
             
             doc.setDrawColor(220, 220, 220);
-            doc.line(labelX, infoY + 1.5, infoBoxX + infoBoxWidth - 3, infoY + 1.5);
+            doc.line(labelX, infoY + 1.2, infoBoxX + infoBoxWidth - 2, infoY + 1.2);
             infoY += lineHeight;
 
             // Nombre
             doc.setFont('helvetica', 'bold');
             doc.text('Nombre:', labelX, infoY);
             doc.setFont('helvetica', 'normal');
-            doc.text(carnet.nombre, labelX + 20, infoY);
+            doc.text(carnet.nombre, valueX, infoY);
             
             doc.setDrawColor(220, 220, 220);
-            doc.line(labelX, infoY + 1.5, infoBoxX + infoBoxWidth - 3, infoY + 1.5);
+            doc.line(labelX, infoY + 1.2, infoBoxX + infoBoxWidth - 2, infoY + 1.2);
             infoY += lineHeight;
 
             // DNI
             doc.setFont('helvetica', 'bold');
             doc.text('DNI:', labelX, infoY);
             doc.setFont('helvetica', 'normal');
-            doc.text(carnet.dni || '', labelX + 20, infoY);
+            doc.text(carnet.dni || '', valueX, infoY);
             
             doc.setDrawColor(220, 220, 220);
-            doc.line(labelX, infoY + 1.5, infoBoxX + infoBoxWidth - 3, infoY + 1.5);
+            doc.line(labelX, infoY + 1.2, infoBoxX + infoBoxWidth - 2, infoY + 1.2);
             infoY += lineHeight;
 
             // Legajo
             doc.setFont('helvetica', 'bold');
             doc.text('Legajo:', labelX, infoY);
             doc.setFont('helvetica', 'normal');
-            doc.text(carnet.legajo || '', labelX + 20, infoY);
+            doc.text(carnet.legajo || '', valueX, infoY);
             
             doc.setDrawColor(220, 220, 220);
-            doc.line(labelX, infoY + 1.5, infoBoxX + infoBoxWidth - 3, infoY + 1.5);
+            doc.line(labelX, infoY + 1.2, infoBoxX + infoBoxWidth - 2, infoY + 1.2);
             infoY += lineHeight;
 
             // Fecha de Calificación
             doc.setFont('helvetica', 'bold');
             doc.text('Fecha de Calificación:', labelX, infoY);
             doc.setFont('helvetica', 'normal');
-            doc.text(formatDate(carnet.fecha_calificacion), labelX + 44, infoY);
+            doc.text(formatDate(carnet.fecha_calificacion), labelX + 36, infoY);
             
             doc.setDrawColor(220, 220, 220);
-            doc.line(labelX, infoY + 1.5, infoBoxX + infoBoxWidth - 3, infoY + 1.5);
+            doc.line(labelX, infoY + 1.2, infoBoxX + infoBoxWidth - 2, infoY + 1.2);
             infoY += lineHeight;
 
             // Fecha de Vencimiento
             doc.setFont('helvetica', 'bold');
             doc.text('Fecha de Vencimiento:', labelX, infoY);
             doc.setFont('helvetica', 'normal');
-            doc.text(formatDate(carnet.fecha_vencimiento), labelX + 47, infoY);
+            doc.text(formatDate(carnet.fecha_vencimiento), labelX + 38, infoY);
             
             doc.setDrawColor(220, 220, 220);
-            doc.line(labelX, infoY + 1.5, infoBoxX + infoBoxWidth - 3, infoY + 1.5);
+            doc.line(labelX, infoY + 1.2, infoBoxX + infoBoxWidth - 2, infoY + 1.2);
             infoY += lineHeight;
 
             // Apto Médico (sin línea al final)
             doc.setFont('helvetica', 'bold');
             doc.text('Apto Médico:', labelX, infoY);
             doc.setFont('helvetica', 'normal');
-            doc.text(carnet.apto_medico, labelX + 25, infoY);
+            doc.text(carnet.apto_medico, valueX, infoY);
         }
 
         function printDirect() {
