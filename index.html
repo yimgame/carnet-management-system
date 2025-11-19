@@ -1209,6 +1209,12 @@
         }
 
         function generatePDF() {
+            // Validar que jsPDF esté cargado
+            if (typeof window.jspdf === 'undefined') {
+                alert('❌ Error: Librería de PDF no cargada.\n\nPor favor recarga la página.');
+                return;
+            }
+
             const { jsPDF } = window.jspdf;
             const carnets = getCarnetsToPrint();
             const perPage = parseInt(document.getElementById('carnetsPerPage').value);
@@ -1216,7 +1222,7 @@
             const includeLogo = document.getElementById('includeLogo').checked;
             
             if (carnets.length === 0) {
-                alert('No hay carnets para imprimir con los filtros seleccionados');
+                alert('⚠️ No hay carnets para imprimir con los filtros seleccionados');
                 return;
             }
 
@@ -1414,9 +1420,73 @@
         }
 
         function printDirect() {
-            generatePDF();
-            // En un entorno real, esto abriría el diálogo de impresión
-            // window.print() se puede usar si el PDF está embebido
+            // Validar que jsPDF esté cargado
+            if (typeof window.jspdf === 'undefined') {
+                alert('❌ Error: Librería de PDF no cargada.\n\nPor favor recarga la página.');
+                return;
+            }
+
+            const { jsPDF } = window.jspdf;
+            const carnets = getCarnetsToPrint();
+            const perPage = parseInt(document.getElementById('carnetsPerPage').value);
+            const orientation = document.getElementById('pageOrientation').value;
+            const includeLogo = document.getElementById('includeLogo').checked;
+            
+            if (carnets.length === 0) {
+                alert('⚠️ No hay carnets para imprimir con los filtros seleccionados');
+                return;
+            }
+
+            const doc = new jsPDF({
+                orientation: orientation,
+                unit: 'mm',
+                format: 'a4'
+            });
+
+            const pageWidth = orientation === 'portrait' ? 210 : 297;
+            const pageHeight = orientation === 'portrait' ? 297 : 210;
+            const margin = 10;
+            
+            // Calcular dimensiones de cada carnet
+            const cols = perPage <= 2 ? 1 : perPage <= 4 ? 2 : perPage <= 8 ? 2 : 2;
+            const rows = Math.ceil(perPage / cols);
+            
+            const carnetWidth = (pageWidth - (margin * (cols + 1))) / cols;
+            const carnetHeight = (pageHeight - (margin * (rows + 1))) / rows;
+
+            let currentPage = 0;
+            let currentPosition = 0;
+
+            carnets.forEach((carnet, index) => {
+                if (currentPosition >= perPage) {
+                    doc.addPage();
+                    currentPage++;
+                    currentPosition = 0;
+                }
+
+                const col = currentPosition % cols;
+                const row = Math.floor(currentPosition / cols);
+                
+                const x = margin + (col * (carnetWidth + margin));
+                const y = margin + (row * (carnetHeight + margin));
+
+                drawCarnet(doc, carnet, x, y, carnetWidth, carnetHeight, includeLogo);
+                
+                currentPosition++;
+            });
+
+            // Abrir en nueva ventana para imprimir
+            const pdfBlob = doc.output('blob');
+            const pdfUrl = URL.createObjectURL(pdfBlob);
+            const printWindow = window.open(pdfUrl);
+            
+            if (printWindow) {
+                printWindow.onload = function() {
+                    printWindow.print();
+                };
+            } else {
+                alert('⚠️ Por favor permite ventanas emergentes para imprimir directamente.\n\nAlternativamente usa el botón "Generar PDF".');
+            }
         }
 
         function printSingleCarnet(carnetId) {
