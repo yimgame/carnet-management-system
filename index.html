@@ -1373,7 +1373,7 @@
             doc.setFont('helvetica', 'bold');
             doc.text('Apellido:', labelX, infoY);
             doc.setFont('helvetica', 'normal');
-            doc.text(carnet.apellido, valueX, infoY);
+            doc.text(String(carnet.apellido || ''), valueX, infoY);
             
             doc.setDrawColor(220, 220, 220);
             doc.line(labelX, infoY + 1.2, infoBoxX + infoBoxWidth - 2, infoY + 1.2);
@@ -1383,7 +1383,7 @@
             doc.setFont('helvetica', 'bold');
             doc.text('Nombre:', labelX, infoY);
             doc.setFont('helvetica', 'normal');
-            doc.text(carnet.nombre, valueX, infoY);
+            doc.text(String(carnet.nombre || ''), valueX, infoY);
             
             doc.setDrawColor(220, 220, 220);
             doc.line(labelX, infoY + 1.2, infoBoxX + infoBoxWidth - 2, infoY + 1.2);
@@ -1393,7 +1393,7 @@
             doc.setFont('helvetica', 'bold');
             doc.text('DNI:', labelX, infoY);
             doc.setFont('helvetica', 'normal');
-            doc.text(carnet.dni || '', valueX, infoY);
+            doc.text(String(carnet.dni || ''), valueX, infoY);
             
             doc.setDrawColor(220, 220, 220);
             doc.line(labelX, infoY + 1.2, infoBoxX + infoBoxWidth - 2, infoY + 1.2);
@@ -1403,7 +1403,7 @@
             doc.setFont('helvetica', 'bold');
             doc.text('Legajo:', labelX, infoY);
             doc.setFont('helvetica', 'normal');
-            doc.text(carnet.legajo || '', valueX, infoY);
+            doc.text(String(carnet.legajo || ''), valueX, infoY);
             
             doc.setDrawColor(220, 220, 220);
             doc.line(labelX, infoY + 1.2, infoBoxX + infoBoxWidth - 2, infoY + 1.2);
@@ -1433,7 +1433,7 @@
             doc.setFont('helvetica', 'bold');
             doc.text('Apto Médico:', labelX, infoY);
             doc.setFont('helvetica', 'normal');
-            doc.text(carnet.apto_medico, valueX, infoY);
+            doc.text(String(carnet.apto_medico || 'Apto'), valueX, infoY);
         }
 
         function printDirect() {
