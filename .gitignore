@@ -39,6 +39,10 @@ node_modules/
 backup/
 *.backup
 
+# Fotos de carnets (datos sensibles - mantener solo LEEME.txt)
+fotos/*
+!fotos/LEEME.txt
+
 # Documentación obsoleta (opcional - descomenta si quieres ignorarlos)
 # LEEME.md
 # GUIA_DE_USO.md
