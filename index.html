@@ -1432,6 +1432,24 @@
         }
 
         // Función para abrir modal de edición
+        // Convertir fecha DD/MM/YYYY a YYYY-MM-DD para input type="date"
+        function convertDateToInputFormat(dateStr) {
+            if (!dateStr) return '';
+            
+            // Si ya está en formato YYYY-MM-DD, devolverla tal cual
+            if (/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) {
+                return dateStr;
+            }
+            
+            // Si está en formato DD/MM/YYYY, convertir
+            if (/^\d{2}\/\d{2}\/\d{4}$/.test(dateStr)) {
+                const parts = dateStr.split('/');
+                return `${parts[2]}-${parts[1]}-${parts[0]}`; // YYYY-MM-DD
+            }
+            
+            return dateStr;
+        }
+
         function editCarnet(carnetId) {
             const carnet = carnetsData.find(c => c.id === carnetId);
             
@@ -1446,8 +1464,8 @@
             document.getElementById('edit_nombre').value = carnet.nombre;
             document.getElementById('edit_dni').value = carnet.dni;
             document.getElementById('edit_legajo').value = carnet.legajo;
-            document.getElementById('edit_fecha_calificacion').value = carnet.fecha_calificacion;
-            document.getElementById('edit_fecha_vencimiento').value = carnet.fecha_vencimiento;
+            document.getElementById('edit_fecha_calificacion').value = convertDateToInputFormat(carnet.fecha_calificacion);
+            document.getElementById('edit_fecha_vencimiento').value = convertDateToInputFormat(carnet.fecha_vencimiento);
             document.getElementById('edit_apto_medico').value = carnet.apto_medico;
 
             // Mostrar foto actual si existe
