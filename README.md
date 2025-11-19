@@ -1,4 +1,4 @@
-# 🚗 Sistema de Gestión de Carnets - ARCOR SAIC
+# 🚗 Sistema de Gestión de Carnets
 
 **Sistema web completo para gestionar carnets de conducir de autoelevadores con alertas automáticas de vencimiento**
 
@@ -14,7 +14,7 @@
 - ⚠️ **Alertas automáticas** de vencimientos (30 días de anticipación)
 - 📂 **Carga masiva** desde archivos Excel
 - ✏️ **Edición completa** de carnets y fotos
-- 🖨️ **Impresión profesional** con diseño oficial ARCOR
+- 🖨️ **Impresión profesional** con diseño oficial
 - 📸 **Gestión de fotos** (Base64 o carpeta local)
 - 🔍 **Búsqueda y filtrado** avanzado
 - 💾 **Exportación** a Excel
@@ -197,7 +197,7 @@ carnets/
 - ✅ **Eliminar carnets** con confirmación
 - ✅ **Gestión de fotos** mejorada (Base64 o carpeta local)
 - ✅ **Impresión masiva** con botón rápido "10 por Hoja"
-- ✅ **Diseño mejorado** coincide con imagen oficial ARCOR
+- ✅ **Diseño mejorado** coincide con imagen oficial
 - ✅ **Documentación unificada** en GUIA_COMPLETA.md
 
 Ver todos los cambios en [CAMBIOS_RECIENTES.md](CAMBIOS_RECIENTES.md)
@@ -236,7 +236,7 @@ Más preguntas: [GUIA_COMPLETA.md - FAQ](GUIA_COMPLETA.md#-faq)
 - **Documentación completa:** [GUIA_COMPLETA.md](GUIA_COMPLETA.md)
 - **Problemas comunes:** [Troubleshooting](GUIA_COMPLETA.md#-troubleshooting)
 - **Preguntas frecuentes:** [FAQ](GUIA_COMPLETA.md#-faq)
-- **Contacto IT:** Equipo de IT ARCOR
+- **Contacto IT:** Equipo de IT
 
 ---
 
